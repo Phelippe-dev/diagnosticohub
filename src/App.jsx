@@ -443,7 +443,7 @@ export default function App() {
       if (high.length === 0) {
         high.push({
           title: `🔍 Pesquisa de Preços da Concorrência & Auditoria SEO do Produto Campeão '${prodA}'`,
-          desc: `O produto '${prodA}' vendeu ${mlData.prod_a_atual} unidades (recuo de ${prodAUnitsLost} unidades). Ação: Fazer benchmark dos 5 concorrentes líderes no catálogo do ML, ajustar o preço com base na calculadora para obter margem líquida de ${margemAlvo}% e incluir palavras-chave de alta busca na Ficha Técnica (GTIN/EAN, marca, modelo).`,
+          desc: `O produto '${prodA}' vendeu ${mlData.prod_a_atual} unidades (recuo de ${prodAUnitsLost} unidades). Ação: Fazer benchmark dos 5 concorrentes líderes no catálogo do ML, ajustar o preço com base na calculadora para obter margem líquida saudável (meta 20.0%) e incluir palavras-chave de alta busca na Ficha Técnica (GTIN/EAN, marca, modelo).`,
           meta: "Caminho Nativo: Mercado Livre > Pesquisa de Busca & Ficha Técnica | Prazo: 48 Horas | Responsável: Analista de SEO ML | Custo: R$ 0,00"
         });
       }
