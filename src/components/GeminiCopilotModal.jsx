@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Bot, Sparkles, X, Lightbulb, CheckCircle, AlertTriangle, ArrowRight, Globe, Key, ShieldCheck, RefreshCw } from 'lucide-react';
+import { Bot, Sparkles, X, Lightbulb, CheckCircle, AlertTriangle, ArrowRight, Globe, RefreshCw } from 'lucide-react';
 import { generateAccountDiagnosis } from '../services/geminiService';
 
 export default function GeminiCopilotModal({ 
@@ -13,8 +13,6 @@ export default function GeminiCopilotModal({
   tikTokData,
   onApplyPlan 
 }) {
-  const [apiKey, setApiKey] = useState(import.meta.env.VITE_GEMINI_API_KEY || '');
-  const [showKeyInput, setShowKeyInput] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [loadingStep, setLoadingStep] = useState('');
   const [errorMsg, setErrorMsg] = useState(null);
@@ -51,14 +49,13 @@ export default function GeminiCopilotModal({
         currentMarketplace,
         mlData,
         shopeeData,
-        tikTokData,
-        apiKeyOverride: apiKey
+        tikTokData
       });
 
       setAiAnalysis(result);
     } catch (err) {
       console.error(err);
-      setErrorMsg(err.message || 'Falha ao consultar a IA Gemini. Verifique a chave de API ou sua conexão.');
+      setErrorMsg(err.message || 'Falha ao consultar a IA Gemini. Verifique a conexão com a API.');
     } finally {
       setIsGenerating(false);
       setLoadingStep('');
@@ -80,7 +77,7 @@ export default function GeminiCopilotModal({
       <div className="card" style={{ maxWidth: '720px', width: '100%', borderTop: `4px solid ${accentColor}`, maxHeight: '92vh', overflowY: 'auto' }}>
         
         {/* CABEÇALHO */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{ background: accentColor, color: '#0b0e14', padding: '8px', borderRadius: '8px', display: 'flex' }}>
               <Bot size={22} />
@@ -94,33 +91,6 @@ export default function GeminiCopilotModal({
             <X size={20} />
           </button>
         </div>
-
-        {/* GERENCIAMENTO DE CHAVE DA API */}
-        <div style={{ background: 'var(--bg-input)', padding: '0.6rem 0.85rem', borderRadius: 'var(--radius-sm)', marginBottom: '1rem', border: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.78rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}>
-            <ShieldCheck size={16} color="var(--success)" />
-            <span>Chave IA Protegida: <strong style={{ color: '#fff' }}>{apiKey ? `${apiKey.substring(0, 10)}...` : 'Não configurada'}</strong></span>
-          </div>
-          <button 
-            onClick={() => setShowKeyInput(!showKeyInput)} 
-            style={{ background: 'none', border: 'none', color: accentColor, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', fontWeight: '700' }}
-          >
-            <Key size={14} /> {showKeyInput ? 'Ocultar Chave' : 'Alterar Chave'}
-          </button>
-        </div>
-
-        {showKeyInput && (
-          <div style={{ marginBottom: '1rem', padding: '0.75rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-sm)', border: '1px dashed var(--border-subtle)' }}>
-            <label style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '4px' }}>Chave da API da IA Gemini:</label>
-            <input 
-              type="text"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Cole sua chave da IA Gemini aqui"
-              style={{ width: '100%', padding: '0.5rem', background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: '4px', color: '#fff', fontSize: '0.82rem' }}
-            />
-          </div>
-        )}
 
         {errorMsg && (
           <div style={{ background: 'rgba(239, 68, 68, 0.12)', border: '1px solid var(--danger)', color: 'var(--danger)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', marginBottom: '1rem', fontSize: '0.82rem' }}>
