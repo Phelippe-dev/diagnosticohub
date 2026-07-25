@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#080b11" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="Diagnóstico operacional para vendedores do Mercado Livre e Shopee. Análise de causa raiz, plano de ação 5W2H e calculadora de precificação com margem real." />
+    <title>Growth Hub — Diagnóstico Operacional ML e Shopee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK (v10 Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBlQVLi_fT4vK9QCIVzq33cyeisb-_seKw",
+        authDomain: "diagnostico-de-desempenho-ml.firebaseapp.com",
+        projectId: "diagnostico-de-desempenho-ml",
+        storageBucket: "diagnostico-de-desempenho-ml.firebasestorage.app",
+        messagingSenderId: "740490013731",
+        appId: "1:740490013731:web:3df9b81b80697869271596",
+        measurementId: "G-DVG4K0RSRZ"
+      };
+      if (typeof firebase !== 'undefined') {
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
