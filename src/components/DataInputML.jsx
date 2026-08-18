@@ -30,29 +30,31 @@ export default function DataInputML({ mlData, setMlData, onSubmitML, onOpenImpor
               <FileSpreadsheet size={15} /> Importar Planilha CSV
             </button>
           )}
-        </div>        {/* REGRAS OFICIAIS MERCADO LIVRE 2026 */}
+        </div>
+
+        {/* REGRAS OFICIAIS MERCADO LIVRE 2026 */}
         <div style={{
-          margin: '0.5rem 0 1.25rem 0',
+          margin: '1.25rem 0',
           padding: '1.25rem 1.5rem',
-          backgroundColor: '#0b0f19',
-          border: '1px solid var(--ml-yellow)',
-          borderRadius: 'var(--radius-md)',
+          backgroundColor: '#0c1019',
+          border: '1px solid #ffd600',
+          borderRadius: '10px',
           fontSize: '0.86rem',
-          lineHeight: '1.6'
+          lineHeight: '1.6',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.4)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem', color: 'var(--ml-yellow)', fontWeight: 700, fontSize: '1.05rem' }}>
-            <Zap size={18} />
-            <span>Regras Oficiais Mercado Livre 2026</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem', color: '#ffd600', fontWeight: 700, fontSize: '1.05rem' }}>
+            <span>⚡ Regras Oficiais Mercado Livre 2026</span>
           </div>
 
-          <ul style={{ listStyleType: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.55rem', color: 'var(--text-primary)' }}>
+          <ul style={{ listStyleType: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.55rem', color: '#e2e8f0' }}>
             <li>• <strong>Anúncios Clássicos vs. Premium:</strong> Os anúncios Clássicos cobram de 10% a 14% dependendo da categoria, sem parcelamento sem juros. Os anúncios Premium cobram de 15% a 19% e permitem parcelamento em até 12x sem juros (custo financeiro ~2.8%).</li>
             <li>• <strong>Produtos abaixo de R$ 79,00:</strong> Isentos do custo total do Frete Grátis, porém é cobrada a tarifa fixa de gestão logística proporcional ao peso (32% do valor da tabela base de frete).</li>
             <li>• <strong>Produtos a partir de R$ 79,00:</strong> O vendedor é OBRIGADO a oferecer Frete Grátis. O custo do frete recebe desconto progressivo conforme o nível de reputação do vendedor (até 70% Off para Platinum/Gold).</li>
             <li>• <strong>Desconto Fulfillment Full:</strong> Vendedores que utilizam os centros de distribuição Mercado Envios Full ganham 8% de desconto adicional no custo do frete grátis.</li>
             <li>• <strong>Programa de Afiliados Mercado Livre:</strong> Vendas originadas por afiliados parceiros possuem comissão adicional de 3% a 7% negociada na plataforma de parceiros ML.</li>
-            <li style={{ color: 'var(--ml-yellow)', background: 'rgba(255, 214, 0, 0.08)', padding: '0.65rem 0.85rem', borderRadius: '6px', border: '1px solid rgba(255, 214, 0, 0.3)', marginTop: '0.35rem' }}>
-              • <strong>Atualização de Taxas &amp; Logística (A partir do dia 24 de Agosto):</strong> O Envios Flex passa a ser calculado dinamicamente por <em>peso, dimensões do pacote e distância</em> (substituindo a taxa única). Ocorreram também reajustes nos custos de envio base (&lt;R$19 e &gt;R$19 / frete rápido ~R$0,90) e exigência de código EAN cadastrado na Lista Oficial para desconto no Full Supermercado.
+            <li style={{ color: '#ffd600' }}>
+              • <strong>Atualização de Taxas &amp; Logística (A partir do dia 24 de Agosto):</strong> O Envios Flex passa a ser calculado dinamicamente considerando peso do produto, dimensões da embalagem e distância da entrega. Ocorreram também reajustes nos custos de envio base (&lt;R$19 e &gt;R$19 / frete rápido ~R$0,90) e a concessão de custos diferenciados no Full Supermercado passa a exigir código EAN do item na Lista Oficial de Produtos Selecionados.
             </li>
           </ul>
         </div>
