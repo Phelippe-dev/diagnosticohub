@@ -24,6 +24,12 @@
   --tiktok-cyan-bg: rgba(0, 242, 254, 0.1);
   --tiktok-cyan-border: rgba(0, 242, 254, 0.25);
   --tiktok-red: #ff0050;
+
+  --primary: #ffd600;
+  --primary-hover: #e6c200;
+  --primary-bg: rgba(255, 214, 0, 0.1);
+  --primary-border: rgba(255, 214, 0, 0.25);
+  --primary-text: #0b0e14;
   
   --blue-accent: #3b82f6;
   --success: #10b981;
@@ -1686,4 +1692,59 @@ body.tiktok-active .mobile-bottom-tab.active {
   .app-topbar, .form-actions-flex, .topbar-actions-desktop, .topbar-actions-mobile { display: none !important; }
   .tab-panel { display: block !important; opacity: 1 !important; margin-bottom: 2rem !important; }
   .card { background: #111622 !important; border: 1px solid rgba(255, 214, 0, 0.3) !important; box-shadow: none !important; color: #f8fafc !important; break-inside: avoid; margin-bottom: 1.5rem !important; }
+}
+
+/* ==========================================================================
+   THEME SWITCHING OVERRIDES (ML = Yellow, Shopee = Orange, TikTok = Cyan)
+   ========================================================================== */
+body.ml-active {
+  --primary: #ffd600;
+  --primary-hover: #e6c200;
+  --primary-bg: rgba(255, 214, 0, 0.1);
+  --primary-border: rgba(255, 214, 0, 0.3);
+  --primary-text: #0b0e14;
+}
+
+body.shopee-active {
+  --primary: #ff5722;
+  --primary-hover: #e04818;
+  --primary-bg: rgba(255, 87, 34, 0.1);
+  --primary-border: rgba(255, 87, 34, 0.3);
+  --primary-text: #ffffff;
+}
+
+body.tiktok-active {
+  --primary: #00f2fe;
+  --primary-hover: #00d8e4;
+  --primary-bg: rgba(0, 242, 254, 0.1);
+  --primary-border: rgba(0, 242, 254, 0.3);
+  --primary-text: #0b0e14;
+}
+
+body.tiktok-active .brand-logo-icon {
+  background: var(--tiktok-cyan);
+  color: #0b0e14;
+  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.25);
+}
+
+body.tiktok-active .topbar-badge {
+  background: rgba(0, 242, 254, 0.1);
+  border-color: rgba(0, 242, 254, 0.3);
+  color: var(--tiktok-cyan);
+}
+
+body.tiktok-active .dot-indicator {
+  background-color: var(--tiktok-cyan);
+  box-shadow: 0 0 8px var(--tiktok-cyan);
+}
+
+body.shopee-active .topbar-badge {
+  background: rgba(255, 87, 34, 0.1);
+  border-color: rgba(255, 87, 34, 0.3);
+  color: var(--shopee-orange);
+}
+
+body.shopee-active .dot-indicator {
+  background-color: var(--shopee-orange);
+  box-shadow: 0 0 8px var(--shopee-orange);
 }

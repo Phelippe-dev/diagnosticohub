@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, ShoppingBag, Video, FileText, Printer, ChevronDown, ChevronUp, Bot } from 'lucide-react';
+import { FileSpreadsheet, Printer, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Topbar({ 
   currentMarketplace, 
@@ -8,7 +8,7 @@ export default function Topbar({
   loadDemoTikTok,
   loadDemo5W2H, 
   handlePrint,
-  onOpenGeminiAI
+  onOpenImport
 }) {
   const [actionsOpen, setActionsOpen] = useState(false);
 
@@ -32,72 +32,45 @@ export default function Topbar({
           {getBadgeLabel()}
         </div>
         <h1 style={{ marginTop: '0.35rem' }}>Diagnóstico Operacional e Growth Hub</h1>
-        <p className="topbar-subtitle">Central de Análise, Precificação e Plano 5W2H</p>
+        <p className="topbar-subtitle">Central de Análise, Pesquisa de Mercado e Plano 5W2H</p>
       </div>
 
       {/* Desktop actions */}
       <div className="topbar-actions topbar-actions-desktop">
         <button 
           className="btn btn-sm" 
-          onClick={onOpenGeminiAI}
-          style={{ background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', color: '#fff', border: 'none' }}
-          title="Abrir o Copilot de Inteligência Artificial Gemini"
+          onClick={onOpenImport}
+          style={{ background: 'var(--bg-card)', color: '#fff', border: '1px solid rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', gap: '6px' }}
+          title="Importar dados via Planilha CSV ou Excel"
         >
-          <Bot size={15} />
-          Copilot IA
+          <FileSpreadsheet size={15} color="var(--success)" />
+          Importar Planilha
         </button>
 
-        <button className="btn btn-yellow btn-sm" onClick={loadDemoML} title="Carregar simulação do Mercado Livre">
-          <Sparkles size={14} />
-          Exemplo ML
-        </button>
-        <button className="btn btn-shopee btn-sm" onClick={loadDemoShopee} title="Carregar simulação da Shopee">
-          <ShoppingBag size={14} />
-          Exemplo Shopee
-        </button>
-        <button className="btn btn-tiktok btn-sm" onClick={loadDemoTikTok} title="Carregar simulação do TikTok Shop">
-          <Video size={14} />
-          Exemplo TikTok
-        </button>
-        <button className="btn btn-outline btn-sm" onClick={loadDemo5W2H} title="Carregar modelo PDF 5W2H">
-          <FileText size={14} />
-          Modelo 5W2H
-        </button>
-        <button className="btn btn-primary btn-sm" onClick={handlePrint} title="Exportar relatório em PDF">
+        <button className="btn btn-outline btn-sm" onClick={handlePrint} title="Imprimir ou Salvar PDF do Diagnóstico">
           <Printer size={14} />
           PDF
         </button>
       </div>
 
-      {/* Mobile actions — collapsible */}
+      {/* Mobile actions dropdown */}
       <div className="topbar-actions-mobile">
         <button 
           className="btn btn-outline btn-sm" 
-          style={{ width: '100%', justifyContent: 'space-between' }}
           onClick={() => setActionsOpen(v => !v)}
+          style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
         >
-          <span>Ações Rápidas</span>
+          Ações Rápidas
           {actionsOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
         </button>
+
         {actionsOpen && (
-          <div className="topbar-actions-dropdown">
-            <button className="btn btn-sm" style={{ flex: 1, background: '#6366f1', color: '#fff' }} onClick={() => { onOpenGeminiAI(); setActionsOpen(false); }}>
-              <Bot size={14} /> Copilot IA
+          <div className="mobile-actions-dropdown">
+            <button className="mobile-action-item" onClick={() => { onOpenImport(); setActionsOpen(false); }}>
+              <FileSpreadsheet size={14} color="var(--success)" /> Importar Planilha
             </button>
-            <button className="btn btn-yellow btn-sm" style={{ flex: 1 }} onClick={() => { loadDemoML(); setActionsOpen(false); }}>
-              <Sparkles size={14} /> ML
-            </button>
-            <button className="btn btn-shopee btn-sm" style={{ flex: 1 }} onClick={() => { loadDemoShopee(); setActionsOpen(false); }}>
-              <ShoppingBag size={14} /> Shopee
-            </button>
-            <button className="btn btn-tiktok btn-sm" style={{ flex: 1 }} onClick={() => { loadDemoTikTok(); setActionsOpen(false); }}>
-              <Video size={14} /> TikTok
-            </button>
-            <button className="btn btn-outline btn-sm" style={{ flex: 1 }} onClick={() => { loadDemo5W2H(); setActionsOpen(false); }}>
-              <FileText size={14} /> 5W2H
-            </button>
-            <button className="btn btn-primary btn-sm" style={{ flex: 1 }} onClick={() => { handlePrint(); setActionsOpen(false); }}>
-              <Printer size={14} /> PDF
+            <button className="mobile-action-item" onClick={() => { handlePrint(); setActionsOpen(false); }}>
+              <Printer size={14} /> Salvar PDF
             </button>
           </div>
         )}

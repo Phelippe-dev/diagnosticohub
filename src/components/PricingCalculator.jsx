@@ -551,6 +551,35 @@ export default function PricingCalculator({ currentMarketplace }) {
                   Tabela Oficial de Comissões e Frete Obrigatório por Reputação
                 </p>
               </div>
+
+              {/* REGRAS OFICIAIS ML 2026 + MUDANÇAS DE 24 DE AGOSTO */}
+              <div style={{
+                padding: '0.75rem 0.9rem',
+                background: 'rgba(255, 214, 0, 0.04)',
+                border: '1px solid var(--ml-yellow-border)',
+                borderRadius: 'var(--radius-sm)',
+                marginBottom: '0.85rem',
+                fontSize: '0.78rem',
+                lineHeight: '1.45'
+              }}>
+                <div style={{ fontSize: '0.82rem', color: 'var(--ml-yellow)', fontWeight: 700, marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Zap size={14} />
+                  <span>Regras Mercado Livre &amp; Atualização de 24 de Agosto</span>
+                </div>
+                <div style={{ color: 'var(--text-primary)', display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                  <div>• <strong>Clássicos:</strong> 10% a 14% | <strong>Premium:</strong> 15% a 19% (12x sem juros ~2.8%).</div>
+                  <div>• <strong>Abaixo de R$ 79:</strong> Isento de frete total, taxa de gestão logística de 32% sobre frete base.</div>
+                  <div>• <strong>A partir de R$ 79:</strong> Frete grátis obrigatório (desconto até 70% para Líder Gold/Platinum).</div>
+                  <div>• <strong>Full:</strong> 8% de desc. extra no frete | <strong>Afiliados:</strong> 3% a 7% comissão externa.</div>
+                  <div style={{ borderTop: '1px dashed var(--ml-yellow-border)', paddingTop: '0.3rem', marginTop: '0.2rem', color: 'var(--ml-yellow)', fontWeight: 700 }}>
+                    🚨 MUDANÇAS A PARTIR DE 24 DE AGOSTO:
+                  </div>
+                  <div>• <strong>Envios Flex:</strong> Cálculo dinâmico por <em>Peso, Dimensão do Pacote e Distância</em> (substitui taxa única).</div>
+                  <div>• <strong>Custos de Envio:</strong> Reajustes nos fretes &lt;R$19 e &gt;R$19, e alterações no Frete Grátis Rápido (~R$0,90).</div>
+                  <div>• <strong>Full Supermercado:</strong> Exige código EAN cadastrado na Lista Oficial de Produtos Selecionados.</div>
+                </div>
+              </div>
+
               <div className="form-group" style={{ marginBottom: '0.75rem' }}>
                 <label>Categoria do Produto</label>
                 <select className="select-input" value={mlCategoria} onChange={e => setMlCategoria(Number(e.target.value))}>

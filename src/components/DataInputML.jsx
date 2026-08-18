@@ -1,9 +1,9 @@
 import React from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, FileSpreadsheet, Zap } from 'lucide-react';
 import DateRangeSelector from './DateRangeSelector';
 import FormattedInput from './FormattedInput';
 
-export default function DataInputML({ mlData, setMlData, onSubmitML }) {
+export default function DataInputML({ mlData, setMlData, onSubmitML, onOpenImport }) {
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setMlData(prev => ({
@@ -15,9 +15,60 @@ export default function DataInputML({ mlData, setMlData, onSubmitML }) {
   return (
     <div id="form-container-ml" className="form-container">
       <div className="card">
-        <div className="card-header">
-          <h2>Painel de Inserção de Dados do Mercado Livre</h2>
-          <p>Insira os dados da sua conta no Mercado Livre para comparar dois períodos ou clique nos botões de exemplo para carregar dados de demonstração.</p>
+        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <h2>Painel de Inserção de Dados do Mercado Livre</h2>
+            <p>Insira os dados da sua conta ou importe via planilha CSV para comparar dois períodos.</p>
+          </div>
+          {onOpenImport && (
+            <button 
+              type="button" 
+              className="btn btn-outline btn-sm"
+              onClick={onOpenImport}
+              style={{ gap: '6px', borderColor: 'var(--ml-yellow)', color: 'var(--ml-yellow)' }}
+            >
+              <FileSpreadsheet size={15} /> Importar Planilha CSV
+            </button>
+          )}
+        </div>
+
+        {/* REGRAS OFICIAIS MERCADO LIVRE 2026 + ATUALIZAÇÃO 24 DE AGOSTO */}
+        <div style={{
+          margin: '0.5rem 0 1.25rem 0',
+          padding: '1.1rem 1.3rem',
+          backgroundColor: 'rgba(255, 214, 0, 0.04)',
+          border: '1px solid var(--ml-yellow)',
+          borderRadius: 'var(--radius-md)',
+          fontSize: '0.85rem',
+          lineHeight: '1.5'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.65rem', color: 'var(--ml-yellow)', fontWeight: 700, fontSize: '0.95rem' }}>
+            <Zap size={18} />
+            <span>Regras Oficiais Mercado Livre 2026 &amp; Atualizações de 24 de Agosto</span>
+          </div>
+
+          <ul style={{ listStyleType: 'none', paddingLeft: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.45rem', color: 'var(--text-primary)' }}>
+            <li>• <strong>Anúncios Clássicos vs. Premium:</strong> Os anúncios Clássicos cobram de 10% a 14% dependendo da categoria, sem parcelamento sem juros. Os anúncios Premium cobram de 15% a 19% e permitem parcelamento em até 12x sem juros (custo financeiro ~2.8%).</li>
+            <li>• <strong>Produtos abaixo de R$ 79,00:</strong> Isentos do custo total do Frete Grátis, porém é cobrada a tarifa fixa de gestão logística proporcional ao peso (32% do valor da tabela base de frete).</li>
+            <li>• <strong>Produtos a partir de R$ 79,00:</strong> O vendedor é OBRIGADO a oferecer Frete Grátis. O custo do frete recebe desconto progressivo conforme o nível de reputação do vendedor (até 70% Off para Platinum/Gold).</li>
+            <li>• <strong>Desconto Fulfillment Full:</strong> Vendedores que utilizam os centros de distribuição Mercado Envios Full ganham 8% de desconto adicional no custo do frete grátis.</li>
+            <li>• <strong>Programa de Afiliados Mercado Livre:</strong> Vendas originadas por afiliados parceiros possuem comissão adicional de 3% a 7% negociada na plataforma de parceiros ML.</li>
+            <li style={{ marginTop: '0.35rem', paddingTop: '0.5rem', borderTop: '1px dashed var(--ml-yellow-border)', color: 'var(--ml-yellow)', fontWeight: 700 }}>
+              🚨 NOVIDADES DA ATUALIZAÇÃO (A PARTIR DE 24 DE AGOSTO DE 2026):
+            </li>
+            <li style={{ paddingLeft: '0.6rem' }}>
+              • <strong>Envios Flex (Peso, Dimensão e Distância):</strong> O custo e bônus do Flex deixam de ter taxa fixa única. Agora o valor é calculado dinamicamente com base no peso real, cubagem do pacote e distância percorrida até a entrega.
+            </li>
+            <li style={{ paddingLeft: '0.6rem' }}>
+              • <strong>Ajuste nos Custos de Envio:</strong> Reajustes nos fretes para produtos abaixo e acima de R$ 19,00, além do Frete Grátis Rápido (com alterações médias de até R$ 0,90 por item).
+            </li>
+            <li style={{ paddingLeft: '0.6rem' }}>
+              • <strong>Validação EAN no Full Supermercado:</strong> Condições promocionais na categoria Supermercado agora exigem que o código EAN do produto esteja cadastrado na Lista Oficial de Produtos Selecionados.
+            </li>
+            <li style={{ paddingLeft: '0.6rem' }}>
+              • <strong>Ação Prática:</strong> Confira os e-mails oficiais/Seller Center para checar bonificações específicas da sua conta e recalcule a precificação considerando dimensões exatas dos SKUs.
+            </li>
+          </ul>
         </div>
 
         <form onSubmit={onSubmitML}>

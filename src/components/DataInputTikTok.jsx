@@ -1,9 +1,9 @@
 import React from 'react';
-import { Video } from 'lucide-react';
+import { Video, FileSpreadsheet } from 'lucide-react';
 import DateRangeSelector from './DateRangeSelector';
 import FormattedInput from './FormattedInput';
 
-export default function DataInputTikTok({ tikTokData, setTikTokData, onSubmitTikTok }) {
+export default function DataInputTikTok({ tikTokData, setTikTokData, onSubmitTikTok, onOpenImport }) {
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setTikTokData(prev => ({
@@ -15,10 +15,22 @@ export default function DataInputTikTok({ tikTokData, setTikTokData, onSubmitTik
   return (
     <div id="form-container-tiktok" className="form-container">
       <div className="card" style={{ borderTop: '3px solid var(--tiktok-cyan)' }}>
-        <div className="card-header">
-          <span className="badge badge-tiktok">TIKTOK SHOP BRASIL PERFORMANCE HUB</span>
-          <h2 style={{ marginTop: '0.3rem' }}>Painel de Inserção de Dados do TikTok Shop</h2>
-          <p>Diagnóstico alinhado às diretrizes oficiais do TikTok Shop Seller Center Brasil (Shop Performance Score, SLA de Despacho 48h, Affiliate Center e GMV Max Ads).</p>
+        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <span className="badge badge-tiktok">TIKTOK SHOP BRASIL PERFORMANCE HUB</span>
+            <h2 style={{ marginTop: '0.3rem' }}>Painel de Inserção de Dados do TikTok Shop</h2>
+            <p>Insira os dados da sua loja ou importe via planilha CSV para comparar dois períodos.</p>
+          </div>
+          {onOpenImport && (
+            <button 
+              type="button" 
+              className="btn btn-outline btn-sm"
+              onClick={onOpenImport}
+              style={{ gap: '6px', borderColor: 'var(--tiktok-cyan)', color: 'var(--tiktok-cyan)' }}
+            >
+              <FileSpreadsheet size={15} /> Importar Planilha CSV
+            </button>
+          )}
         </div>
 
         <form onSubmit={onSubmitTikTok}>

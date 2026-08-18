@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ArrowRight, 
   Eye, 
@@ -11,9 +11,10 @@ import {
   AlertTriangle,
   CheckCircle2,
   TrendingDown,
-  Bot,
-  Sparkles
+  Sparkles,
+  Save
 } from 'lucide-react';
+import { saveDiagnosisSnapshot } from '../utils/diagnosisHistory';
 
 export default function DiagnosisEngine({ 
   diagnosis, 
@@ -22,15 +23,22 @@ export default function DiagnosisEngine({
   mlData, 
   shopeeData, 
   tikTokData,
-  onGoTo5W2H,
-  onOpenGeminiAI 
+  onGoTo5W2H
 }) {
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const isShopee = currentMarketplace === 'shopee';
   const isTikTok = currentMarketplace === 'tiktok';
 
   const channelName = isTikTok ? 'TikTok Shop' : (isShopee ? 'Shopee Brasil' : 'Mercado Livre');
   const channelIcon = isTikTok ? <Video size={18} /> : (isShopee ? <ShoppingBag size={18} /> : <Zap size={18} />);
   const accentColor = isTikTok ? 'var(--tiktok-cyan)' : (isShopee ? 'var(--shopee-orange)' : 'var(--ml-yellow)');
+
+  const handleQuickSave = () => {
+    const activeFormData = isShopee ? shopeeData : (isTikTok ? tikTokData : mlData);
+    saveDiagnosisSnapshot(`Auditoria ${channelName} - ${new Date().toLocaleDateString('pt-BR')}`, currentMarketplace, metrics, diagnosis, activeFormData);
+    setSaveSuccess(true);
+    setTimeout(() => setSaveSuccess(false), 3000);
+  };
 
   const formatBRL = (v) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v || 0);
   const formatPct = (val) => `${val > 0 ? '+' : ''}${val.toFixed(1)}%`;
@@ -69,20 +77,6 @@ export default function DiagnosisEngine({
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', minWidth: '200px' }}>
             <button 
               className="btn btn-large" 
-              onClick={onOpenGeminiAI}
-              style={{ 
-                width: '100%', 
-                background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)', 
-                color: '#fff',
-                fontWeight: '800',
-                border: 'none'
-              }}
-            >
-              <Bot size={18} /> Diagnóstico IA Gemini
-            </button>
-
-            <button 
-              className="btn btn-large" 
               onClick={onGoTo5W2H} 
               style={{ 
                 width: '100%', 
@@ -94,9 +88,46 @@ export default function DiagnosisEngine({
             >
               Executar Plano 5W2H <ArrowRight size={16} />
             </button>
+
+            <button 
+              className="btn btn-outline" 
+              onClick={handleQuickSave}
+              style={{ 
+                width: '100%', 
+                fontWeight: '700',
+                gap: '6px',
+                borderColor: saveSuccess ? 'var(--success)' : 'rgba(255,255,255,0.2)',
+                color: saveSuccess ? 'var(--success)' : '#fff'
+              }}
+            >
+              {saveSuccess ? <CheckCircle2 size={16} color="var(--success)" /> : <Save size={16} />} 
+              {saveSuccess ? 'Salvo no Histórico!' : 'Salvar Auditoria'}
+            </button>
+          </div>
+      </div>
+      </div>
+
+      {/* INSIGHTS ESTRATÉGICOS DO DIAGNÓSTICO */}
+      {diagnosis.insights && diagnosis.insights.length > 0 && (
+        <div style={{ margin: '1.5rem 0', background: 'var(--bg-card)', padding: '1.5rem', borderRadius: 'var(--radius)', border: `1px solid ${accentColor}40` }}>
+          <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#fff', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+            <Sparkles size={20} color={accentColor} /> Resumo Estratégico do Diagnóstico ({diagnosis.insights.length} Insights)
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+            {diagnosis.insights.map((insight, idx) => (
+              <div key={idx} style={{ 
+                padding: '1rem', 
+                borderRadius: 'var(--radius-sm)', 
+                background: 'rgba(0,0,0,0.2)', 
+                borderLeft: `4px solid var(--${insight.type})` 
+              }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: '800', color: '#fff', marginBottom: '6px' }}>{insight.title}</div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.4' }}>{insight.desc}</div>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
 
       <div style={{ margin: '1.5rem 0 1rem 0' }}>
         <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#fff' }}>

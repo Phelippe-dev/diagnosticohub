@@ -10,126 +10,156 @@ import ActionPlan from './components/ActionPlan';
 import Plan5W2HModel from './components/Plan5W2HModel';
 import AccountZeroPlaybook from './components/AccountZeroPlaybook';
 import PricingCalculator from './components/PricingCalculator';
-import GeminiCopilotModal from './components/GeminiCopilotModal';
-import AppTutorialChatbot from './components/AppTutorialChatbot';
+import FileImportModal from './components/FileImportModal';
+import DiagnosisHistoryTab from './components/DiagnosisHistoryTab';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('tab-input');
   const [currentMarketplace, setCurrentMarketplace] = useState('ml');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isGeminiModalOpen, setIsGeminiModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.className = `${currentMarketplace}-active`;
+  }, [currentMarketplace]);
+
+  const handleImportData = (importedData, targetMarketplace) => {
+    if (targetMarketplace === 'shopee') {
+      setShopeeData(prev => ({ ...prev, ...importedData }));
+      setCurrentMarketplace('shopee');
+    } else if (targetMarketplace === 'tiktok') {
+      setTikTokData(prev => ({ ...prev, ...importedData }));
+      setCurrentMarketplace('tiktok');
+    } else {
+      setMlData(prev => ({ ...prev, ...importedData }));
+      setCurrentMarketplace('ml');
+    }
+  };
+
+  const handleLoadSnapshot = (savedFormData, targetMarketplace) => {
+    if (targetMarketplace === 'shopee') {
+      setShopeeData(savedFormData);
+      setCurrentMarketplace('shopee');
+    } else if (targetMarketplace === 'tiktok') {
+      setTikTokData(savedFormData);
+      setCurrentMarketplace('tiktok');
+    } else {
+      setMlData(savedFormData);
+      setCurrentMarketplace('ml');
+    }
+  };
 
   // State Form ML
   const [mlData, setMlData] = useState({
-    periodo_atual: '01/06/2026 a 30/06/2026',
-    periodo_anterior: '01/05/2026 a 31/05/2026',
-    fat_atual: 142500.00,
-    fat_anterior: 185000.00,
-    vendas_atual: 1250,
-    vendas_anterior: 1600,
-    visitas_atual: 45000,
-    visitas_anterior: 48000,
-    ticket_atual: 114.00,
-    ticket_anterior: 115.62,
-    conv_atual: 2.78,
-    conv_anterior: 3.33,
-    tempo_resp_atual: 24,
-    tempo_resp_anterior: 12,
-    reputacao: 'Verde Escuro',
-    pct_full: 42.0,
-    modal_flex: true,
-    modal_coleta: true,
-    modal_agencia: true,
-    pct_reclamacoes: 1.4,
-    pct_cancelamentos: 0.8,
-    pct_atrasos: 4.2,
-    ads_ativo: 'Sim',
-    acos_atual: 28.5,
-    acos_anterior: 16.2,
-    ads_fat_atual: 42000.00,
-    ads_fat_anterior: 55000.00,
-    participa_afiliados: 'Sim',
-    prod_a_nome: 'Kit Ferramentas Pro 110 Peças',
-    prod_a_atual: 380,
-    prod_a_anterior: 620,
-    prod_b_nome: 'Parafusadeira Sem Fio 18V',
-    prod_b_atual: 290,
-    prod_b_anterior: 310
+    periodo_atual: '',
+    periodo_anterior: '',
+    fat_atual: '',
+    fat_anterior: '',
+    vendas_atual: '',
+    vendas_anterior: '',
+    visitas_atual: '',
+    visitas_anterior: '',
+    ticket_atual: '',
+    ticket_anterior: '',
+    conv_atual: '',
+    conv_anterior: '',
+    tempo_resp_atual: '',
+    tempo_resp_anterior: '',
+    reputacao: 'OpcaoNula',
+    pct_full: '',
+    modal_flex: false,
+    modal_coleta: false,
+    modal_agencia: false,
+    pct_reclamacoes: '',
+    pct_cancelamentos: '',
+    pct_atrasos: '',
+    ads_ativo: 'Não',
+    acos_atual: '',
+    acos_anterior: '',
+    ads_fat_atual: '',
+    ads_fat_anterior: '',
+    participa_afiliados: 'Não',
+    prod_a_nome: '',
+    prod_a_atual: '',
+    prod_a_anterior: '',
+    prod_b_nome: '',
+    prod_b_atual: '',
+    prod_b_anterior: ''
   });
 
   // State Form Shopee
   const [shopeeData, setShopeeData] = useState({
-    shopee_periodo_atual: '01/06/2026 a 30/06/2026',
-    shopee_periodo_anterior: '01/05/2026 a 31/05/2026',
-    shopee_fat_atual: 112000.00,
-    shopee_fat_anterior: 158000.00,
-    shopee_vendas_atual: 1400,
-    shopee_vendas_anterior: 1950,
-    shopee_visitas_atual: 52000,
-    shopee_visitas_anterior: 55000,
-    shopee_ticket_atual: 80.00,
-    shopee_ticket_anterior: 81.02,
-    shopee_conv_atual: 2.69,
-    shopee_conv_anterior: 3.55,
-    shopee_penalidades: 4,
-    shopee_taxa_cancelamento: 3.8,
-    shopee_taxa_atraso: 4.2,
-    shopee_chat_response: 74.0,
-    shopee_loja_rating: 4.6,
-    shopee_modal_envio: 'shopee_xpress',
-    shopee_ads_ativo: 'Sim',
-    shopee_cir_atual: 24.5,
-    shopee_cir_anterior: 12.0,
-    shopee_ads_fat_atual: 32000.00,
-    shopee_ads_fat_anterior: 48000.00,
-    shopee_tool_vouchers: true,
+    shopee_periodo_atual: '',
+    shopee_periodo_anterior: '',
+    shopee_fat_atual: '',
+    shopee_fat_anterior: '',
+    shopee_vendas_atual: '',
+    shopee_vendas_anterior: '',
+    shopee_visitas_atual: '',
+    shopee_visitas_anterior: '',
+    shopee_ticket_atual: '',
+    shopee_ticket_anterior: '',
+    shopee_conv_atual: '',
+    shopee_conv_anterior: '',
+    shopee_penalidades: '',
+    shopee_taxa_cancelamento: '',
+    shopee_taxa_atraso: '',
+    shopee_chat_response: '',
+    shopee_loja_rating: '',
+    shopee_modal_envio: '',
+    shopee_ads_ativo: 'Não',
+    shopee_cir_atual: '',
+    shopee_cir_anterior: '',
+    shopee_ads_fat_atual: '',
+    shopee_ads_fat_anterior: '',
+    shopee_tool_vouchers: false,
     shopee_tool_combo: false,
     shopee_tool_flash: false,
     shopee_tool_video: false,
-    shopee_tool_afiliados: true,
-    shopee_prod_a_nome: 'Kit Capas de Almofada 40x40 (4 Unidades)',
-    shopee_prod_a_atual: 420,
-    shopee_prod_a_anterior: 850,
-    shopee_prod_b_nome: 'Jogo de Lençol Casal 4 Peças',
-    shopee_prod_b_atual: 310,
-    shopee_prod_b_anterior: 390
+    shopee_tool_afiliados: false,
+    shopee_prod_a_nome: '',
+    shopee_prod_a_atual: '',
+    shopee_prod_a_anterior: '',
+    shopee_prod_b_nome: '',
+    shopee_prod_b_atual: '',
+    shopee_prod_b_anterior: ''
   });
 
   // State Form TikTok Shop
   const [tikTokData, setTikTokData] = useState({
-    tiktok_periodo_atual: '01/06/2026 a 30/06/2026',
-    tiktok_periodo_anterior: '01/05/2026 a 31/05/2026',
-    tiktok_fat_atual: 98500.00,
-    tiktok_fat_anterior: 145000.00,
-    tiktok_vendas_atual: 1150,
-    tiktok_vendas_anterior: 1720,
-    tiktok_visitas_atual: 68000,
-    tiktok_visitas_anterior: 75000,
-    tiktok_ticket_atual: 85.65,
-    tiktok_ticket_anterior: 84.30,
-    tiktok_conv_atual: 1.69,
-    tiktok_conv_anterior: 2.29,
-    tiktok_shop_score: 4.2,
-    tiktok_late_dispatch: 3.4,
-    tiktok_seller_cancellation: 2.1,
-    tiktok_violation_points: 6,
-    tiktok_ads_ativo: 'Sim',
-    tiktok_roas_atual: 3.2,
-    tiktok_roas_anterior: 5.4,
-    tiktok_ads_fat_atual: 28000.00,
-    tiktok_ads_fat_anterior: 45000.00,
-    tiktok_affiliate_commission: 12.0,
-    tiktok_tool_affiliate: true,
+    tiktok_periodo_atual: '',
+    tiktok_periodo_anterior: '',
+    tiktok_fat_atual: '',
+    tiktok_fat_anterior: '',
+    tiktok_vendas_atual: '',
+    tiktok_vendas_anterior: '',
+    tiktok_visitas_atual: '',
+    tiktok_visitas_anterior: '',
+    tiktok_ticket_atual: '',
+    tiktok_ticket_anterior: '',
+    tiktok_conv_atual: '',
+    tiktok_conv_anterior: '',
+    tiktok_shop_score: '',
+    tiktok_late_dispatch: '',
+    tiktok_seller_cancellation: '',
+    tiktok_violation_points: '',
+    tiktok_ads_ativo: 'Não',
+    tiktok_roas_atual: '',
+    tiktok_roas_anterior: '',
+    tiktok_ads_fat_atual: '',
+    tiktok_ads_fat_anterior: '',
+    tiktok_affiliate_commission: '',
+    tiktok_tool_affiliate: false,
     tiktok_tool_live: false,
-    tiktok_tool_samples: true,
+    tiktok_tool_samples: false,
     tiktok_tool_flash: false,
-    tiktok_tool_freeshipping: true,
-    tiktok_prod_a_nome: 'Escova Alisadora Multifuncional',
-    tiktok_prod_a_atual: 350,
-    tiktok_prod_a_anterior: 780,
-    tiktok_prod_b_nome: 'Sérum Facial Clareador Vitamina C',
-    tiktok_prod_b_atual: 280,
-    tiktok_prod_b_anterior: 410
+    tiktok_tool_freeshipping: false,
+    tiktok_prod_a_nome: '',
+    tiktok_prod_a_atual: '',
+    tiktok_prod_a_anterior: '',
+    tiktok_prod_b_nome: '',
+    tiktok_prod_b_atual: '',
+    tiktok_prod_b_anterior: ''
   });
 
   const calculateMetrics = (d, mp) => {
@@ -239,7 +269,14 @@ export default function App() {
       mainDesc = `Sua conta expandiu o faturamento para ${formatBRL(m.fatAtual)}, com ${m.vendasAtual} vendas concluídas. Próxima etapa: Aumentar participação no Envios Full acima de 60% e cadastrar no Programa de Afiliados.`;
     }
 
-    return { mainPainPoint, mainDesc, statusLevel, scores: { visScore, convScore, logScore, adsScore } };
+    const insights = [];
+    if (m.fatDelta < 0) insights.push({ type: 'danger', icon: 'TrendingDown', title: `Faturamento em Queda (${m.fatDelta.toFixed(1)}%)`, desc: `A conta recuou ${formatBRL(Math.abs(fatDeltaR$))} em relação ao período anterior.` });
+    else if (m.fatDelta > 0) insights.push({ type: 'success', icon: 'TrendingUp', title: `Crescimento de Faturamento (+${m.fatDelta.toFixed(1)}%)`, desc: `A conta expandiu ${formatBRL(fatDeltaR$)} em relação ao período anterior.` });
+    if (m.convDelta < 0) insights.push({ type: 'warning', icon: 'ShoppingCart', title: `Perda de Conversão`, desc: `A conversão caiu para ${m.convAtual.toFixed(2)}%, perda est. de ${formatBRL(fatLostConv)}.` });
+    if (d.pct_full < 60) insights.push({ type: 'warning', icon: 'Truck', title: `Baixa Penetração Full (${d.pct_full}%)`, desc: `Aumentar o estoque no Envios Full para >60% é vital para a tag Chegará Amanhã.` });
+    if (d.acos_atual > 20) insights.push({ type: 'danger', icon: 'DollarSign', title: `ACOS Elevado (${d.acos_atual}%)`, desc: `O custo de publicidade está alto, gastando ${formatBRL((d.ads_fat_atual * d.acos_atual) / 100)}.` });
+    if (d.pct_reclamacoes > 2.0 || d.pct_atrasos > 6.0) insights.push({ type: 'danger', icon: 'AlertTriangle', title: `Risco de Reputação`, desc: `Reclamações em ${d.pct_reclamacoes}% ou Atrasos em ${d.pct_atrasos}%.` });
+    return { mainPainPoint, mainDesc, statusLevel, scores: { visScore, convScore, logScore, adsScore }, insights };
   };
 
   const runShopeeDiagnosis = (m, d) => {
@@ -277,7 +314,13 @@ export default function App() {
       mainDesc = `Sua loja na Shopee cresceu para ${formatBRL(m.fatAtual)}, com ${m.vendasAtual} pedidos concluídos. Próximos passos: Ativar Shopee Vídeo e Oferta Relâmpago.`;
     }
 
-    return { mainPainPoint, mainDesc, statusLevel, scores: { visScore, convScore, logScore, adsScore } };
+    const insights = [];
+    if (m.fatDelta < 0) insights.push({ type: 'danger', icon: 'TrendingDown', title: `GMV em Queda (${m.fatDelta.toFixed(1)}%)`, desc: `A conta recuou ${formatBRL(Math.abs(fatDeltaR$))} em relação ao período anterior.` });
+    else if (m.fatDelta > 0) insights.push({ type: 'success', icon: 'TrendingUp', title: `Crescimento de GMV (+${m.fatDelta.toFixed(1)}%)`, desc: `A conta expandiu ${formatBRL(fatDeltaR$)} em relação ao período anterior.` });
+    if (m.convDelta < 0) insights.push({ type: 'warning', icon: 'ShoppingCart', title: `Perda de Conversão`, desc: `A conversão caiu de ${m.convAnterior.toFixed(2)}% para ${m.convAtual.toFixed(2)}%.` });
+    if (d.shopee_penalidades > 0) insights.push({ type: 'danger', icon: 'AlertTriangle', title: `Penalizações (${d.shopee_penalidades} pts)`, desc: `Risco imediato de perda do selo Vendedor Indicado.` });
+    if (d.shopee_cir_atual > 15) insights.push({ type: 'warning', icon: 'DollarSign', title: `CIR de Ads Elevado (${d.shopee_cir_atual}%)`, desc: `O custo de publicidade (CIR) está acima da zona ideal de rentabilidade.` });
+    return { mainPainPoint, mainDesc, statusLevel, scores: { visScore, convScore, logScore, adsScore }, insights };
   };
 
   const runTikTokDiagnosis = (m, d) => {
@@ -316,7 +359,13 @@ export default function App() {
       mainDesc = `Sua loja no TikTok Shop alcançou ${formatBRL(m.fatAtual)} em GMV, com ${m.vendasAtual} pedidos concluídos. Próximos passos: Escalar campanhas GMV Max e integrar com FBT.`;
     }
 
-    return { mainPainPoint, mainDesc, statusLevel, scores: { visScore, convScore, logScore, adsScore } };
+    const insights = [];
+    if (m.fatDelta < 0) insights.push({ type: 'danger', icon: 'TrendingDown', title: `GMV em Queda (${m.fatDelta.toFixed(1)}%)`, desc: `A conta recuou ${formatBRL(Math.abs(fatDeltaR$))} no período.` });
+    else if (m.fatDelta > 0) insights.push({ type: 'success', icon: 'TrendingUp', title: `Crescimento GMV (+${m.fatDelta.toFixed(1)}%)`, desc: `O TikTok Shop expandiu ${formatBRL(fatDeltaR$)} no período.` });
+    if (d.tiktok_late_dispatch > 2.0) insights.push({ type: 'danger', icon: 'Truck', title: `Atraso SLA 48h (${d.tiktok_late_dispatch}%)`, desc: `Ultrapassou a meta de <2.0%, colocando o Shop Score em risco.` });
+    if (d.tiktok_roas_atual < 4.0) insights.push({ type: 'warning', icon: 'DollarSign', title: `ROAS Ads Baixo (${d.tiktok_roas_atual}x)`, desc: `O retorno de mídia das campanhas GMV Max está aquém do ideal (>5.0x).` });
+    if (m.convDelta < 0) insights.push({ type: 'warning', icon: 'ShoppingCart', title: `Queda de Conversão`, desc: `Faltam estratégias de LIVE Shopping para impulsionar vendas no carrinho.` });
+    return { mainPainPoint, mainDesc, statusLevel, scores: { visScore, convScore, logScore, adsScore }, insights };
   };
 
   const diagnosis = currentMarketplace === 'tiktok'
@@ -534,7 +583,7 @@ export default function App() {
           loadDemoTikTok={loadDemoTikTok}
           loadDemo5W2H={loadDemo5W2H}
           handlePrint={handlePrint}
-          onOpenGeminiAI={() => setIsGeminiModalOpen(true)}
+          onOpenImport={() => setIsImportModalOpen(true)}
         />
 
         {activeTab === 'tab-input' && (
@@ -546,6 +595,7 @@ export default function App() {
                 e.preventDefault();
                 setActiveTab('tab-dashboard');
               }}
+              onOpenImport={() => setIsImportModalOpen(true)}
             />
           ) : currentMarketplace === 'shopee' ? (
             <DataInputShopee 
@@ -555,6 +605,7 @@ export default function App() {
                 e.preventDefault();
                 setActiveTab('tab-dashboard');
               }}
+              onOpenImport={() => setIsImportModalOpen(true)}
             />
           ) : (
             <DataInputML 
@@ -564,6 +615,7 @@ export default function App() {
                 e.preventDefault();
                 setActiveTab('tab-dashboard');
               }}
+              onOpenImport={() => setIsImportModalOpen(true)}
             />
           )
         )}
@@ -584,7 +636,6 @@ export default function App() {
             shopeeData={shopeeData}
             tikTokData={tikTokData}
             onGoTo5W2H={() => setActiveTab('tab-alignment')}
-            onOpenGeminiAI={() => setIsGeminiModalOpen(true)}
           />
         )}
 
@@ -617,23 +668,28 @@ export default function App() {
             currentMarketplace={currentMarketplace}
           />
         )}
+
+        {activeTab === 'tab-history' && (
+          <DiagnosisHistoryTab 
+            currentMarketplace={currentMarketplace}
+            metrics={metrics}
+            diagnosis={diagnosis}
+            mlData={mlData}
+            shopeeData={shopeeData}
+            tikTokData={tikTokData}
+            onLoadSnapshot={handleLoadSnapshot}
+            onGoToDashboard={() => setActiveTab('tab-dashboard')}
+          />
+        )}
       </main>
 
-      {/* MODAL IA GEMINI COPILOT */}
-      <GeminiCopilotModal 
-        isOpen={isGeminiModalOpen}
-        onClose={() => setIsGeminiModalOpen(false)}
-        metrics={metrics}
-        diagnosis={diagnosis}
+      {/* MODAL DE IMPORTAÇÃO AUTOMÁTICA DE PLANILHAS */}
+      <FileImportModal 
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImportData={handleImportData}
         currentMarketplace={currentMarketplace}
-        mlData={mlData}
-        shopeeData={shopeeData}
-        tikTokData={tikTokData}
-        onApplyPlan={() => setActiveTab('tab-alignment')}
       />
-
-      {/* CHATBOT TUTORIAL FLUTUANTE */}
-      <AppTutorialChatbot />
     </div>
   );
 }

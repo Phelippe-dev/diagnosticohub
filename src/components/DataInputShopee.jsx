@@ -1,9 +1,9 @@
 import React from 'react';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, FileSpreadsheet } from 'lucide-react';
 import DateRangeSelector from './DateRangeSelector';
 import FormattedInput from './FormattedInput';
 
-export default function DataInputShopee({ shopeeData, setShopeeData, onSubmitShopee }) {
+export default function DataInputShopee({ shopeeData, setShopeeData, onSubmitShopee, onOpenImport }) {
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
     setShopeeData(prev => ({
@@ -15,10 +15,22 @@ export default function DataInputShopee({ shopeeData, setShopeeData, onSubmitSho
   return (
     <div id="form-container-shopee" className="form-container">
       <div className="card" style={{ borderTop: '3px solid var(--shopee-orange)' }}>
-        <div className="card-header">
-          <span className="badge badge-shopee">SHOPEE PERFORMANCE HUB</span>
-          <h2 style={{ marginTop: '0.3rem' }}>Painel de Inserção de Dados da Shopee</h2>
-          <p>Diagnóstico alinhado às políticas oficiais da Shopee Brasil (Sistema de Penalidades 0 a 15, SLAs de NFR/LSR, Chat CRR e Mídia Ads).</p>
+        <div className="card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+          <div>
+            <span className="badge badge-shopee">SHOPEE PERFORMANCE HUB</span>
+            <h2 style={{ marginTop: '0.3rem' }}>Painel de Inserção de Dados da Shopee</h2>
+            <p>Insira os dados da sua loja ou importe via planilha CSV para comparar dois períodos.</p>
+          </div>
+          {onOpenImport && (
+            <button 
+              type="button" 
+              className="btn btn-outline btn-sm"
+              onClick={onOpenImport}
+              style={{ gap: '6px', borderColor: 'var(--shopee-orange)', color: 'var(--shopee-orange)' }}
+            >
+              <FileSpreadsheet size={15} /> Importar Planilha CSV
+            </button>
+          )}
         </div>
 
         <form onSubmit={onSubmitShopee}>
